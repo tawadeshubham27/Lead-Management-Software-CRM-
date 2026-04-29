@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "name": "Acme Corp",
+    "email": "contact@acme.com",
+    "phone": "555-0101",
+    "status": "New",
+    "notes": "Interested in premium package.",
+    "createdAt": "2026-04-20T10:00:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Globex Inc",
+    "email": "info@globex.com",
+    "phone": "555-0102",
+    "status": "Contacted",
+    "notes": "Emailed them the brochure. Awaiting reply.",
+    "createdAt": "2026-04-22T14:30:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Initech",
+    "email": "bill@initech.com",
+    "phone": "555-0103",
+    "status": "Qualified",
+    "notes": "Budget approved for Q3.",
+    "createdAt": "2026-04-25T09:15:00Z"
+  }
+]

@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Mock User for assigning leads and Auth
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String?
+  role          String    @default("USER") // ADMIN or USER
+  leads         Lead[]
+}
+
+// CRM Models
+model Lead {
+  id           String    @id @default(cuid())
+  name         String
+  phone        String?   @unique // Stored in international format, e.g., +1234567890
+  email        String?
+  source       String    @default("Manual") // Instagram, WhatsApp, Facebook Ads, Website, Referral
+  status       String    @default("New") // New, Contacted, Qualified, Proposal Sent, Won, Lost
+  followUpDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  
+  assignedToId String?
+  assignedTo   User?     @relation(fields: [assignedToId], references: [id])
+  
+  messages     Message[]
+  activities   Activity[]
+}
+
+// WhatsApp Chats
+model Message {
+  id        String   @id @default(cuid())
+  leadId    String
+  direction String   // INCOMING, OUTGOING
+  content   String
+  timestamp DateTime @default(now())
+  
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+// Notes and Status Changes
+model Activity {
+  id        String   @id @default(cuid())
+  leadId    String
+  type      String   // NOTE, STATUS_CHANGE
+  content   String
+  timestamp DateTime @default(now())
+  
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
